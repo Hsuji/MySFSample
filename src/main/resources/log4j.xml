@@ -8,14 +8,14 @@
 		<layout class="org.apache.log4j.PatternLayout">
 			<!-- 
 				%d : Date
-				{yyyy-mm-dd HH:mm:ss} : Date format
+				{yyyy-MM-dd HH:mm:ss} : Date format
 				%p : debug, info같은 레벨 (옵션 -5: 5글자보다 작으면 작은 만큼 여백 출력)
 				%c : class
 				%l : class and method and file and line
 				%m : log message
 				%n : 개행문자
 			 -->
-			<param name="ConversionPattern" value="%d{yyyy-mm-dd HH:mm:ss}[%-5p]%l - %m%n" />
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss}[%-5p]%l - %m%n" />
 		</layout>
 	</appender>
 	
