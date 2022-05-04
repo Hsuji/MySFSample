@@ -4,5 +4,19 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+
+	<!-- FreeMarker configuration -->
+	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF/freemarker"/>
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="freemarkerSettings">
+			<map>
+				<entry key="template_update_delay" value="60000"/>
+				<entry key="auto_flush" value="false"/>
+				<entry key="default_encoding" value="UTF-8"/>
+				<entry key="whitespace_stripping" value="true"/>
+			</map>
+		</property>
+	</bean>
+
 </beans>
