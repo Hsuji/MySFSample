@@ -41,10 +41,13 @@
         <#assign len = str1?length/>
         <p>문자길이(length) : ${len}</p>
         <p>문자길이(trim + length) : ${str1?trim?length}</p>
+        <p>특정문자 첫번째 자리에 추가(ensure_starts_with) : ${str1?ensure_starts_with("\"")}</p>
+        <p>특정문자 마지막 자리에 추가(ensure_ends_with) : ${str1?ensure_ends_with("!")}</p>
     </div>
 
-    <h3>예제 3 - 문자열 자르기</h3>
+    <h3>예제 3 - 문자열</h3>
     <div id="ex3" class="ex-contents">
+        <p><b>문자열 자르기</b></p>
         <#assign ss = "ODN_202203"/>
         <#assign sb = ss?substring(4, 10)/>
         <p>대상 문자열 = ${ss}</p>
@@ -55,6 +58,34 @@
         <p>문자열 자르기(4~9자리까지 [4..9]) : ${ss[4..9]}</p>
         <p>문자열 자르기(8부터 끝까지 [8..]) : ${ss[8..]}</p>
         <p>문자열 자르기(4부터 4개 [4..*4]) : ${ss[4..*4]}</p>
+        <#assign target="foo.bar.txt"/>
+        <p>대상 문자열 : ${target}</p>
+        <p>특정문자 기준 자르기(keep_after) : ${target?keep_after(".")}</p>
+        <p>특정문자 기준 자르기(keep_after_last) : ${target?keep_after_last(".")}</p>
+        <p>특정문자 기준 자르기(keep_before) : ${target?keep_before(".")}</p>
+        <p>특정문자 기준 자르기(keep_before_last) : ${target?keep_before_last(".")}</p>
+        <p>특정문자 기준 자르기(remove_beginning) : ${target?remove_beginning("foo")}</p>
+        <p>특정문자 기준 자르기(remove_ending) : ${target?remove_ending("txt")}</p>
+
+        <p><b>return blooean</b></p>
+        <#assign target="abcdef">
+        <p>대상 문자열 : ${target}</p>
+        <p>starts_with : ${target?starts_with("ab")?c}</p>
+        <p>ends_with : ${target?ends_with("def")?c}</p>
+        <p>contains : ${target?contains("ef")?c}</p>
+
+        <p><b>대소문자</b></p>
+        <p>대상 문자열 : ${target}</p>
+        <p>첫글자 대문자(cap_first) : ${target?cap_first}</p>
+        <p>첫글자 소문자(uncap_first) : ${"Abcdef"?uncap_first}</p>
+        <P>대문자 변환(upper_case) : ${target?upper_case}</P>
+        <p>소문자 변환(lower_case) : ${target?lower_case}</p>
+
+        <p><b>return number</b></p>
+        <#assign target="abcabc">
+        <p>대상 문자열 : ${target}</p>
+        <p>index_of : ${target?index_of("bc")}</p>
+        <p>last_index_of : ${target?last_index_of("bc")}</p>
     </div>
 
     <h3>예제 4 - 형변환</h3>
@@ -81,6 +112,7 @@
         <p><b>True 케이스</b></p>
         <#assign b = ((2/2) == 1)/>
         <p>true, false 표현(string) : ${b?string}</p>
+        <p>true, false 표현(c) : ${b?c}</p>
         <p>true, false 표현(string(true일경우, fales일경우)) : ${b?string("OK", "FAIL")}</p>
         <p>true, false 표현(then(true일경우, fales일경우)) : ${b?then(100, -1)}</p>
         <p><b>False 케이스</b></p>
@@ -152,6 +184,26 @@
             </#if>
         </#list>
         </ul>
+
+        <p><b>list관련 함수</b></p>
+        <#assign sequence = ["A", "B", "C", "D", "E", "F"]/>
+        <#list sequence as item>
+            <p>
+                value : ${item} /
+                _index : ${item_index} /
+                _has_next(boolean) : ${item_has_next?string} /
+                is_even_item(boolean) : ${item?is_even_item?string} /
+                is_first(boolean) : ${item?is_first?string} /
+                is_last(boolean) : ${item?is_last?string} /
+                is_odd_item(boolean) : ${item?is_odd_item?string}
+            </p>
+            <#if item?index == 3>
+                <p>STOP</p>
+                <#break>
+            <#else>
+                <p>GOGO</p>
+            </#if>
+        </#list>
     </div>
 
     <h3>예제 10 - Sequence</h3>
@@ -330,8 +382,8 @@
         <p>data : ${sa1} / ${sa2}</p>
         <p>결과(정상 : 숫자, 에러 : 0) => ${na1} / ${na2}</p>
 
-        <p><b>function</b></p>
-        <p>assign : 전역변수, local : 지역변수</p>
+        <p><b>function(반드시 return값 필요, 내부 출력 무시됨)</b></p>
+        <p>global : 전역변수,  assign : 지역변수 , local : 지역변수(only function, macro)</p>
         <#function is_numeric param>
             <p>param : ${param}</p>
             <#local rslt = false/>
